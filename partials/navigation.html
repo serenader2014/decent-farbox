@@ -1,0 +1,9 @@
+{% set c = get_data(type='folder', with_page=Flase, min_posts_count=1) %}
+
+<div class="nav">
+    <ul>
+        {% for cate in c %}
+            <li class="nav-{{cate.title}} {% if cate.title == category.title %}current{% endif %}" role="presentation"><a href="{% if cate.title == 'home' %}/{% else %}/category/{{cate.title}}/{% endif %}">{{cate.title}}</a></li>
+        {% endfor %}
+    </ul>
+</div>

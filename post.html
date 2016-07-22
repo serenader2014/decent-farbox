@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+    <title>
+            Posts tagged in {{tag}}
+    </title>
+{% endblock %}
+
+{% block body %}
+    {% set cover = site.cover %}
+
+    <header class="main-header detail-page image-bg {%if cover %}has-cover" style="background-image: url({{ cover }}){% else %}no-cover{% endif %}">
+
+        <h1 class="page-title"><a href="http://{{site.site_path}}">{{site.title}}</a></h1>
+        <h2 class="page-description">{{site.content}}</h2>
+
+        {% include "partials/navigation.html" %}
+    </header>
+
+    <main class="content" role="main">
+        <article class="post single-post">
+
+            <header class="post-header short-diver">
+                <h1 class="post-title">{{post.title}}</h1>
+                <section class="post-meta">
+                    {% for tag in post.tags %}
+                        <a href="/tag/{{tag}}">{{tag}}</a> ,
+                    {% endfor %}
+                    {% if post.tags %}
+                        on
+                    {% endif %}
+                    <time class="post-date" datetime="{{post.date.format('%d %B %Y, %a')}}">{{post.date.format('%d %B %Y, %a')}}</time>
+                </section>
+            </header>
+
+            <section class="post-content short-diver">
+                {{post.content}}
+            </section>
+
+            <footer class="post-footer">
+
+
+            {% if site.configs.author_cover %}
+            <div class="author-image">
+                <a class="img image-bg" href="{{site.domains[0]}}" style="background-image: url({{site.configs.author_cover}})"><span class="hidden">{{site.configs.author}}'s Picture</span></a>
+            </div>
+            {% endif %}
+
+            <section class="author short-diver">
+                <h4><a href="{{site.domains[0]}}">{{site.configs.author}}</a></h4>
+
+                {% if site.configs.author_bio %}
+                    <p>{{site.configs.author_bio}}</p>
+                {% else %}
+                    <p>Read <a href="{{site.domains[0]}}">more posts</a> by this author.</p>
+                {% endif %}
+                <div class="author-meta">
+                    {% if site.configs.author_location %}<span class="author-location icon-location">{{site.configs.author_location}}</span>{% endif %}
+                    {% if site.configs.author_website %}<span class="author-link icon-link"><a href="{{website}}">{{site.configs.author_website}}</a></span>{% endif %}
+                </div>
+            </section>
+
+
+
+            </footer>
+
+        </article>
+    </main>
+
+    <aside class="read-next">
+        <h2 class="title">Read More</h2>
+        {% if next_one %}
+        <a class="read-next-story" href="{{next_one.url}}">
+            <section class="post">
+                <h2 title="{{next_one.title}}">{{next_one.title}}</h2>
+                <p>{{next_one.raw_content.limit(80, ' ...')}}&hellip;</p>
+                <div class="white-mask"></div>
+            </section>
+        </a>{% endif %}{% if pre_one %}<a class="read-next-story prev" href="{{pre_one.url}}">
+            <section class="post">
+                <h2 title="{{pre_one.title}}">{{pre_one.title}}</h2>
+                <p>{{pre_one.raw_content.limit(80, ' ...')}}&hellip;</p>
+                <div class="white-mask"></div>
+            </section>
+        </a>
+        {% endif %}
+    </aside>
+
+    <!-- Root element of PhotoSwipe. Must have class pswp. -->
+    <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="pswp__bg"></div>
+        <div class="pswp__scroll-wrap">
+            <div class="pswp__container">
+                <div class="pswp__item"></div>
+                <div class="pswp__item"></div>
+                <div class="pswp__item"></div>
+            </div>
+            <div class="pswp__ui pswp__ui--hidden">
+                <div class="pswp__top-bar">
+                    <div class="pswp__counter"></div>
+                    <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                    <button class="pswp__button pswp__button--share" title="Share"></button>
+                    <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                    <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                    <div class="pswp__preloader">
+                        <div class="pswp__preloader__icn">
+                          <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                    <div class="pswp__share-tooltip"></div> 
+                </div>
+                <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+                </button>
+                <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+                </button>
+                <div class="pswp__caption">
+                    <div class="pswp__caption__center"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}
+    <title>
+        {{site.title}}
+    </title>
+{% endblock %}
+
+{% block body %}
+    {% set postlist = get_data(type='post', path='home') %}
+    {% set pagination = get_paginator(1) %}
+    {% set cover = site.cover %}
+
+    <header class="main-header detail-page image-bg {%if cover %}has-cover" style="background-image: url({{ cover }}){% else %}no-cover{% endif %}">
+
+        <h1 class="page-title"><a href="http://{{site.site_path}}">{{site.title}}</a></h1>
+        <h2 class="page-description">{{site.content}}</h2>
+
+        {% include "partials/navigation.html" %}
+    </header>
+
+    {% include "partials/loop.html" %}
+{% endblock %}
+

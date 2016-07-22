@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}
+    <title>
+        Posts in {{category.title}}
+    </title>
+{% endblock %}
+
+{% block body %}
+    {% set postlist = get_data(type='post', path=category.path) %}
+    {% set pagination = get_paginator(1) %}
+
+    {% if category.metadata.cover %}
+        {% set cover = category.metadata.cover %}
+    {% else %}
+        {% set cover = site.cover %}
+    {% endif %}
+
+    <header class="main-header detail-page image-bg {%if cover %}has-cover" style="background-image: url({{ cover }}){% else %}no-cover{% endif %}">
+
+        <h1 class="page-title">{{category.title}}</h1>
+        <h2 class="page-description">
+            {% if category.metadata.description %}
+                {{category.metadata.description}}
+            {% else %}
+                A {{pagination.total_pages}}-post collection
+            {% endif %}
+        </h2>
+
+        {% include "partials/navigation.html" %}
+    </header>
+
+    {% include "partials/loop.html" %}
+{% endblock %}
+
